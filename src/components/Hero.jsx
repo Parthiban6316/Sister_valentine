@@ -14,6 +14,7 @@ const floatingHearts = Array.from({ length: 10 }).map((_, i) => ({
 export function Hero({ onOpenLetter }) {
   return (
     <section
+      id="hero"
       className="relative min-h-screen overflow-hidden bg-hero-gradient dark:bg-hero-gradient-dark transition-colors duration-700"
       aria-label="Valentine hero"
     >

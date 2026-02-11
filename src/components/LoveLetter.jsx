@@ -14,7 +14,7 @@ const paragraphVariants = {
   }),
 };
 
-export function LoveLetter() {
+export function LoveLetter({ onNext }) {
   return (
     <section
       id="letter"
@@ -61,7 +61,7 @@ export function LoveLetter() {
           </div>
 
           <motion.div
-            className="mt-8 flex justify-end"
+            className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-15%" }}
@@ -70,6 +70,18 @@ export function LoveLetter() {
             <p className="font-script text-2xl text-rose-500 sm:text-3xl dark:text-rose-300">
               {loveLetter.signature}
             </p>
+
+            {onNext && (
+              <motion.button
+                type="button"
+                onClick={onNext}
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97, y: 0 }}
+                className="inline-flex items-center justify-center rounded-full bg-rose-500 px-6 py-2 text-sm font-semibold text-white shadow-md shadow-rose-300/70 hover:bg-rose-600 dark:bg-rose-500 dark:hover:bg-rose-400"
+              >
+                Continue our story →
+              </motion.button>
+            )}
           </motion.div>
         </motion.div>
       </div>

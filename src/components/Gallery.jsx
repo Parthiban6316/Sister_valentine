@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 import { gallery } from "../data/content";
 
-export function Gallery() {
+export function Gallery({ onNext }) {
   // Build a 3x3 grid (9 cells). If there are fewer than 9 items in content,
   // fill the remaining cells with gentle placeholders the user can later customize.
   const cells = Array.from({ length: 9 }, (_, index) => {
@@ -95,6 +95,24 @@ export function Gallery() {
             </motion.div>
           ))}
         </motion.div>
+
+        {onNext && (
+          <motion.div
+            className="mt-10 flex justify-center"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.5 }}
+          >
+            <button
+              type="button"
+              onClick={onNext}
+              className="rounded-full bg-rose-500 px-6 py-2 text-sm font-semibold text-white shadow-md shadow-rose-300/70 transition hover:bg-rose-600 dark:bg-rose-500 dark:hover:bg-rose-400"
+            >
+              Next: A promise for us →
+            </button>
+          </motion.div>
+        )}
       </div>
     </section>
   );

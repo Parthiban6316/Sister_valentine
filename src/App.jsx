@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { AnimatePresence, motion } from "framer-motion";
 import Hero from "./components/Hero";
 import LoveLetter from "./components/LoveLetter";
 import Timeline from "./components/Timeline";
@@ -14,14 +15,25 @@ import DarkModeToggle from "./components/DarkModeToggle";
 import PasswordGate from "./components/PasswordGate";
 import { siteMeta } from "./data/content";
 
+const steps = ["hero", "letter", "journey", "reasons", "gallery", "special", "surprise"];
+
 function App() {
   const [unlocked, setUnlocked] = useState(false);
+  const [step, setStep] = useState("hero");
+
+  const goTo = (id) => {
+    setStep(id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const goNext = () => {
+    const idx = steps.indexOf(step);
+    if (idx === -1 || idx === steps.length - 1) return;
+    goTo(steps[idx + 1]);
+  };
 
   const handleOpenLetter = () => {
-    const letterSection = document.getElementById("letter");
-    if (letterSection) {
-      letterSection.scrollIntoView({ behavior: "smooth" });
-    }
+    goTo("letter");
   };
 
   return (
@@ -50,13 +62,92 @@ function App() {
           </div>
         </div>
 
-        <Hero onOpenLetter={handleOpenLetter} />
-        <LoveLetter />
-        <Timeline />
-        <Reasons />
-        <Gallery />
-        <SpecialMessage />
-        <Surprise />
+        <AnimatePresence mode="wait">
+          {step === "hero" && (
+            <motion.div
+              key="hero"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Hero onOpenLetter={handleOpenLetter} />
+            </motion.div>
+          )}
+
+          {step === "letter" && (
+            <motion.div
+              key="letter"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <LoveLetter onNext={goNext} />
+            </motion.div>
+          )}
+
+          {step === "journey" && (
+            <motion.div
+              key="journey"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Timeline onNext={goNext} />
+            </motion.div>
+          )}
+
+          {step === "reasons" && (
+            <motion.div
+              key="reasons"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Reasons onNext={goNext} />
+            </motion.div>
+          )}
+
+          {step === "gallery" && (
+            <motion.div
+              key="gallery"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Gallery onNext={goNext} />
+            </motion.div>
+          )}
+
+          {step === "special" && (
+            <motion.div
+              key="special"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <SpecialMessage onNext={goNext} />
+            </motion.div>
+          )}
+
+          {step === "surprise" && (
+            <motion.div
+              key="surprise"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Surprise />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <Footer />
       </div>
     </>
